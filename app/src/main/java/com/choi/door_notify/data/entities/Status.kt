@@ -1,4 +1,4 @@
-package com.choi.door_notify.data
+package com.choi.door_notify.data.entities
 
 data class Status (
     var time: Int? = null,

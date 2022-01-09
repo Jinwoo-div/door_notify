@@ -1,4 +1,4 @@
-package com.choi.door_notify.data
+package com.choi.door_notify.data.remote
 
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName

@@ -3,7 +3,7 @@ package com.choi.door_notify.utils
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.choi.door_notify.data.Status
+import com.choi.door_notify.data.entities.Status
 import com.choi.door_notify.databinding.ItemWholeStatusBinding
 
 class WholeStatusRVAdapter(private val dataList: ArrayList<Status>) : RecyclerView.Adapter<WholeStatusRVAdapter.viewHolder>() {
