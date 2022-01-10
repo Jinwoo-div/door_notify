@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <TextView
         android:id="@+id/item_whole_status_time_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintBottom_toTopOf="@id/item_whole_status_iv"
         app:layout_constraintTop_toTopOf="parent"
-        android:text="시간">
+        android:text="시간"
+        android:textSize="@dimen/descriptionStatus">
     </TextView>
     <ImageView
         android:id="@+id/item_whole_status_iv"
-        android:layout_width="0dp"
-        android:layout_height="40dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="6"
         app:layout_constraintTop_toBottomOf="@id/item_whole_status_time_tv"
         app:layout_constraintBottom_toTopOf="@id/item_whole_status_tmpr_tv"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -27,21 +30,25 @@
     <TextView
         android:id="@+id/item_whole_status_tmpr_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_whole_status_iv"
         app:layout_constraintBottom_toTopOf="@id/item_whole_status_rain_tv"
-        android:text="온도">
+        android:text="온도"
+        android:textSize="@dimen/descriptionStatus">
     </TextView>
     <TextView
         android:id="@+id/item_whole_status_rain_tv"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintVertical_weight="1"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/item_whole_status_tmpr_tv"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:text="강수확률">
+        android:text="강수확률"
+        android:textSize="@dimen/descriptionStatus">
     </TextView>
 </androidx.constraintlayout.widget.ConstraintLayout>

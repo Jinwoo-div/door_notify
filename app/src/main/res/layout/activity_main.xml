@@ -63,13 +63,23 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/main_whole_status_rv"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_whole_status">
         </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:id="@+id/main_search_location"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:src="@drawable/search_line">
+        </ImageView>
     </androidx.constraintlayout.widget.ConstraintLayout>
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/main_current_dust_cl"
@@ -91,5 +101,102 @@
             app:layout_constraintTop_toTopOf="parent" />
 
 
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/search_cl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:background="#B3000000">
+<!--        android:visibility="invisible">-->
+        <androidx.cardview.widget.CardView
+            android:id="@+id/search_cv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:cardCornerRadius="30dp"
+            android:layout_marginBottom="-25dp"
+            android:layout_marginTop="100dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp">
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginBottom="25dp"
+            android:layout_marginLeft="20dp"
+            android:background="@color/white">
+            <TextView
+                android:id="@+id/search_title_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="1"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@id/search_et"
+                android:layout_marginLeft="50dp"
+                android:layout_marginTop="20dp"
+                android:text="지역검색"
+                android:textSize="@dimen/descriptionStatus">
+            </TextView>
+            <ImageView
+                android:id="@+id/search_go_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginRight="15dp"
+                android:layout_marginTop="20dp"
+                android:src="@drawable/close_fill">
+            </ImageView>
+            <TextView
+                android:id="@+id/search_go_search_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toLeftOf="@id/search_et"
+                app:layout_constraintBottom_toTopOf="@id/search_rv"
+                android:layout_marginBottom="40dp"
+                android:text="검색"
+                android:textSize="@dimen/descriptionStatus">
+            </TextView>
+            <EditText
+                android:id="@+id/search_et"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="2"
+                app:layout_constraintTop_toBottomOf="@id/search_title_tv"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/search_go_search_tv"
+                app:layout_constraintBottom_toTopOf="@id/search_rv"
+                android:layout_marginRight="20dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginBottom="20dp"
+                android:textSize="@dimen/descriptionStatus"
+                android:imeOptions="flagNoExtractUi">
+            </EditText>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/search_rv"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                app:layout_constraintVertical_weight="5"
+                app:layout_constraintTop_toBottomOf="@id/search_et"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:orientation="vertical"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_search_location">
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.cardview.widget.CardView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

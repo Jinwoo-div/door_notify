@@ -12,4 +12,7 @@ interface LocationDao {
 
     @Query("SELECT * FROM LocationTable WHERE code = '1100000000'")
     fun getFirst(): Location
+
+    @Query("SELECT * FROM LocationTable")
+    fun getAll(): List<Location>
 }

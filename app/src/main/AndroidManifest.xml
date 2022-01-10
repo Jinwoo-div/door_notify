@@ -11,12 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Door_notify"
-
         android:usesCleartextTraffic="true"
+        android:name=".data.local.PrefApp"
         >
         <activity
             android:name=".ui.MainActivity"
-            android:screenOrientation="landscape"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

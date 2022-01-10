@@ -6,18 +6,22 @@ import android.content.res.AssetManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
-import android.view.WindowManager
 import com.choi.door_notify.R
 import com.choi.door_notify.data.entities.ForecastRequest
 import com.choi.door_notify.data.entities.Location
 import com.choi.door_notify.data.entities.Status
 import com.choi.door_notify.data.local.LocationDatabase
+import com.choi.door_notify.data.local.PrefApp
+import com.choi.door_notify.data.local.PreferenceUtil
 import com.choi.door_notify.data.remote.WeatherService
 import com.choi.door_notify.databinding.ActivityMainBinding
+import com.choi.door_notify.utils.SearchLocationRVAdapter
 import com.choi.door_notify.utils.WholeStatusRVAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,8 +31,10 @@ import java.io.InputStream
 class MainActivity : AppCompatActivity(), WeatherView {
 
     lateinit var binding: ActivityMainBinding
+    lateinit var customAdapter: SearchLocationRVAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,10 +54,26 @@ class MainActivity : AppCompatActivity(), WeatherView {
 
         binding.mainWholeStatusRv.adapter = WholeStatusRVAdapter(sets)
 
+        var locationDataList = ArrayList<Location>()
+
+        val db = LocationDatabase.getInstance(this)!!
+        locationDataList.addAll( db.locationDao().getAll())
+
+        customAdapter = SearchLocationRVAdapter(locationDataList)
+
+        binding.searchRv.adapter = customAdapter
+
+        customAdapter.setItemClickListener(object: SearchLocationRVAdapter.ItemClickListener {
+            override fun onClick(loc: Location) {
+                PrefApp.pref.setString("loc", loc.first + " " + loc.second + " " + loc.third)
+            }
+        })
+
     }
 
 
     private fun initListener() {
+
         binding.mainCurrentStatusIv.setOnClickListener() {
             val numOfRows = 10
             val pageNo = 1
@@ -62,8 +84,30 @@ class MainActivity : AppCompatActivity(), WeatherView {
             val ny = 120
             val req = ForecastRequest(numOfRows, pageNo, dataType, baseDate, baseTime, nx, ny)
             WeatherService().OnedayWeather(req)
-
         }
+
+        binding.mainSearchLocation.setOnClickListener() {
+            binding.searchCl.visibility = View.VISIBLE
+        }
+
+        binding.searchGoBack.setOnClickListener() {
+            binding.searchCl.visibility = View.INVISIBLE
+        }
+
+        binding.searchEt.addTextChangedListener(object: TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+            }
+
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                customAdapter.filter.filter(s)
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+
+        })
+
     }
 
     private fun setFullScreen() {
@@ -85,7 +129,7 @@ class MainActivity : AppCompatActivity(), WeatherView {
             }
         } else {
             window.decorView.systemUiVisibility = (
-                    View.SYSTEM_UI_FLAG_IMMERSIVE
+                    View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
                             or View.SYSTEM_UI_FLAG_LAYOUT_STABLE
                             or View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
                             or View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
