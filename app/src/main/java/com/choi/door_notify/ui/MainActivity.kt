@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
+import android.widget.Toast
 import com.choi.door_notify.R
 import com.choi.door_notify.data.entities.ForecastRequest
 import com.choi.door_notify.data.entities.Location
@@ -27,6 +28,8 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.InputStream
+import java.text.SimpleDateFormat
+import java.time.format.DateTimeFormatter
 
 class MainActivity : AppCompatActivity(), WeatherView {
 
@@ -62,17 +65,30 @@ class MainActivity : AppCompatActivity(), WeatherView {
         customAdapter = SearchLocationRVAdapter(locationDataList)
 
         binding.searchRv.adapter = customAdapter
-
-        customAdapter.setItemClickListener(object: SearchLocationRVAdapter.ItemClickListener {
-            override fun onClick(loc: Location) {
-                PrefApp.pref.setString("loc", loc.first + " " + loc.second + " " + loc.third)
-            }
-        })
-
+        
     }
 
 
     private fun initListener() {
+        
+        customAdapter.setItemClickListener(object: SearchLocationRVAdapter.ItemClickListener {
+        override fun onClick(loc: Location) {
+            val str: String = loc.first + " " + loc.second + " " + loc.third
+            PrefApp.pref.setString("loc", str)
+            
+            Toast.makeText(this@MainActivity, "지역이 " + str + "으로 설정되었습니다", Toast.LENGTH_SHORT).show()
+
+            binding.searchCl.visibility = View.INVISIBLE
+            binding.mainShowLocationTv.text = str
+
+            val curTime = System.currentTimeMillis()
+            val dateForm = SimpleDateFormat("yyyymmdd").toString()
+            val timeForm = SimpleDateFormat("hhmmss").toString()
+
+            var req = ForecastRequest(10, 10, "JSON", dateForm, timeForm, 0, 0)
+            WeatherService().OnedayWeather(req)
+        }
+    })
 
         binding.mainCurrentStatusIv.setOnClickListener() {
             val numOfRows = 10
@@ -86,7 +102,7 @@ class MainActivity : AppCompatActivity(), WeatherView {
             WeatherService().OnedayWeather(req)
         }
 
-        binding.mainSearchLocation.setOnClickListener() {
+        binding.mainSearchLocationIv.setOnClickListener() {
             binding.searchCl.visibility = View.VISIBLE
         }
 
