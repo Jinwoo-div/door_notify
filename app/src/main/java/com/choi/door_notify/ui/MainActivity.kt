@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.KeyEvent
 import android.view.View
 import android.view.WindowInsets
 import android.view.WindowInsetsController
@@ -44,7 +45,6 @@ class MainActivity : AppCompatActivity(), WeatherView {
         setContentView(binding.root)
 
         setFullScreen()
-        initListener()
         initDb(this)
 
         var sets = ArrayList<Status>()
@@ -65,12 +65,18 @@ class MainActivity : AppCompatActivity(), WeatherView {
         customAdapter = SearchLocationRVAdapter(locationDataList)
 
         binding.searchRv.adapter = customAdapter
-        
+
+        initListener()
+
     }
 
 
     private fun initListener() {
-        
+
+        binding.searchEt.setOnKeyListener{v, keyCode, event->
+        if (event.action == KeyEvent.ACTION_DOWN && keyCode == KeyEvent.KEYCODE_ENTER) {
+        }
+        }
         customAdapter.setItemClickListener(object: SearchLocationRVAdapter.ItemClickListener {
         override fun onClick(loc: Location) {
             val str: String = loc.first + " " + loc.second + " " + loc.third
@@ -86,7 +92,8 @@ class MainActivity : AppCompatActivity(), WeatherView {
             val timeForm = SimpleDateFormat("hhmmss").toString()
 
             var req = ForecastRequest(10, 10, "JSON", dateForm, timeForm, 0, 0)
-            WeatherService().OnedayWeather(req)
+            WeatherService().onedayWeather(req)
+            Log.d("foreReq", req.toString())
         }
     })
 
@@ -99,7 +106,7 @@ class MainActivity : AppCompatActivity(), WeatherView {
             val nx = 50
             val ny = 120
             val req = ForecastRequest(numOfRows, pageNo, dataType, baseDate, baseTime, nx, ny)
-            WeatherService().OnedayWeather(req)
+            WeatherService().onedayWeather(req)
         }
 
         binding.mainSearchLocationIv.setOnClickListener() {

@@ -24,7 +24,7 @@ class WeatherService {
         return retrofit
     }
 
-    fun OnedayWeather(req: ForecastRequest) {
+    fun onedayWeather(req: ForecastRequest) {
         val retro = makeRetrofit()
         val weatherService = retro.create(WeatherRetrofitInterface::class.java)
 
